@@ -1,0 +1,5 @@
+# Ignore all .pyc files
+__pycache__
+
+# Ignore all generated reports
+*.html
