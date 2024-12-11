@@ -151,7 +151,7 @@ with tab3:
 
         # Expander for additional information about the full report
         with st.expander("Learn more about the full SweetViz report", expanded=False):
-            st.write("Lorem ipsum dolor sit amet")
+            st.write("Our app leverages SweetViz to generate an all-encompassing EDA report, providing a detailed overview of dataset statistics, distributions, and relationships. With just a few clicks, you can gain a deep understanding of your data directly in the app.")
         
         if st.form_submit_button("Generate Full Report", use_container_width=True):
             if st.session_state.data is not None:
@@ -166,7 +166,7 @@ with tab3:
 
         # Expander for additional information about the train vs test report
         with st.expander("Learn more about comparing training and testing datasets", expanded=False):
-            st.write("Lorem ipsum dolor sit amet")
+            st.write("The app utilizes SweetViz to compare training and testing datasets, visually highlighting differences in distributions and feature behavior. This ensures your dataset splits are consistent and ready for machine learning tasks.")
         
         if st.form_submit_button("Generate Train vs Test Report", use_container_width=True):
             if st.session_state.data is not None:
@@ -181,11 +181,11 @@ with tab3:
 
     # Container to generate comparison by feature report
     with st.container(key="comparison-report", border=True):
-        st.subheader("Comparison by Feature Report")
+        st.subheader("Feature Comparison Report")
 
         # Expander for additional information about the comparison by feature report
         with st.expander("Learn more about comparing intra-set characteristics", expanded=False):
-            st.write("Lorem ipsum dolor sit amet")
+            st.write("With our app, you can use SweetViz to explore intra-set characteristics by comparing data subsets with exactly 2 unique values based on a selected feature. This helps uncover meaningful group-level insights, such as gender-based trends or other categorical splits.")
 
         # Dropdown to select the feature for comparison
         feature = st.selectbox("Select the feature to compare",
