@@ -1,7 +1,27 @@
-# This code scripts contains a function to split the data into training and testing sets and save them in the data folder
+# METADATA [split.py] - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-import pandas as pd
-from sklearn.model_selection import train_test_split
+    # Description: This code script contains the function to split the data into training and testing sets.
+
+    # Developed By: 
+        # Name: Mohini T
+        # Role: Intern, PreProd Corp
+        # Code ownership rights: Mohini T, PreProd Corp
+    
+    # Version:
+        # v1.0 Initial version. [Date: 09-12-2024]
+        # v1.1 Updated function to be dynamic. [Date: 10-12-2024]
+
+# CODE - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+    # Dependencies:
+        # Python 3.10.15
+        # Libraries:
+            # Pandas 2.2.3
+            # Scikit-learn 1.5.2
+
+# Importing the necessary libraries
+import pandas as pd # For data manipulation
+from sklearn.model_selection import train_test_split # For splitting the data
 
 def split_data(data, target_column, test_size):
     """

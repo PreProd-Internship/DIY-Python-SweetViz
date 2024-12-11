@@ -1,7 +1,28 @@
-# This code script contains the web app using Streamlit to interact with the functions in the other scripts.
+# METADATA [app.py] - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-import streamlit as st
-import pandas as pd
+    # Description: This code script contains the Streamlit web app for generating SweetViz reports.
+
+    # Developed By: 
+        # Name: Mohini T
+        # Role: Intern, PreProd Corp
+        # Code ownership rights: Mohini T, PreProd Corp
+    
+    # Version:
+        # v1.0 Initial version. [Date: 09-12-2024]
+        # v1.1 Added the functionality to generate SweetViz reports. [Date: 10-12-2024]
+        # v1.2 Fixed comparison by feature report generation. [Date: 11-12-2024]
+
+# CODE - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Dependencies:
+        # Python 3.10.15
+        # Libraries:
+            # Streamlit 1.40.2
+            # Pandas 2.2.3
+
+# Importing the necessary libraries
+import streamlit as st # For creating the web app
+import pandas as pd # For data manipulation
 
 # Importing the functions from the other scripts
 from split import split_data
@@ -28,32 +49,35 @@ with tab1:
     st.subheader("Data Ingestion 📂")
 
     with st.container(border=True):
+        # Radio button to choose between uploading a file or entering a file path
         dataset_choice = st.radio("Choose an option to upload the data", ["Upload the file", "Enter the path"], horizontal=True)
         dataset_bool = True if dataset_choice == "Upload the file" else False
 
+        # File uploader for CSV files
         data_upload = st.file_uploader("Upload a CSV file",
                                     type="csv",
                                     help="Upload a CSV file to generate a report.",
                                     disabled=not dataset_bool)
         
+        # Text input for entering the file path
         data_filepath = st.text_input("Enter the path to the CSV file",
                                 help="Enter the complete path to the source data.",
                                 disabled=dataset_bool)
         
         if st.button("Ingest", use_container_width=True):
-            # Upon clicking this button, if the file is uploaded it will be read by panda's pd.read_csv function,
-            # or if the path is entered, the file will be read by the read_data function in the read.py file.
+            # Read the uploaded file or the file from the entered path
             if dataset_bool:
                 st.session_state.data = pd.read_csv(data_upload)
             else:
                 st.session_state.data = pd.read_csv(data_filepath)
             
+            # Display success or error message based on data ingestion
             if st.session_state.data is not None:
                 st.success("Data ingested successfully!", icon="✅")
             else:
                 st.error("Error ingesting data!", icon="❌")
 
-    # This form will display the data configuration, i.e., upon pressing the "Run" button, no. of rows and columns will be displayed along with the first 5 rows of the data.
+    # Form to display data configuration (number of rows, columns, and first 5 rows)
     with st.form(key="data_config"):
         st.subheader("Data Configuration")
         if st.form_submit_button("Run", use_container_width=True):
@@ -64,7 +88,7 @@ with tab1:
             else:
                 st.error("No data available to display!", icon="❌")
 
-    # This form will drop the uploaded file(s) and clear the data from the session state upon the click of "Drop".
+    # Form to drop the uploaded file and clear the data from session state
     with st.form(key="drop_data"):
         st.subheader("Drop Uploaded File")
         if st.form_submit_button("Drop", use_container_width=True):
@@ -74,9 +98,11 @@ with tab1:
             else:
                 st.error("No file available to drop!", icon="❌")
 
+# Data Preprocessing tab
 with tab2:
     st.subheader("Data Preprocessing 🪛")
 
+    # Form to set the target variable
     with st.form(key="Set Target Variable"):
         st.subheader("Set Target Variable")
         if st.session_state.data is not None:
@@ -87,18 +113,20 @@ with tab2:
             st.session_state.target_column = target_column
             st.success("Target column set successfully!", icon="✅")
     
+    # Form to split the data into training and testing sets
     with st.form(key="split_data", border=True):
         st.subheader("Split Data")
 
         col1, col2 = st.columns(2)
 
         with col1:
+            # Input for training data split percentage
             train_size = st.number_input("Training Data Split %",
                           placeholder="% of training data",
                           help="Enter the percentage of data to be used for training",
                           value=70)
         
-        # This is for visual appeal
+        # Calculate and display testing data split percentage
         test_size = 100 - train_size
         with col2:
             n = st.number_input("Testing Data Split %",
@@ -113,13 +141,15 @@ with tab2:
             else:
                 st.error("No data available to split!", icon="❌")
 
+# Generate SweetViz Reports tab
 with tab3:
     st.subheader("Generate SweetViz Reports 📋")
 
+    # Form to generate full SweetViz report
     with st.form(key="full-report"):
         st.subheader("Full Report")
 
-        # Expander for theory
+        # Expander for additional information about the full report
         with st.expander("Learn more about the full SweetViz report", expanded=False):
             st.write("Lorem ipsum dolor sit amet")
         
@@ -130,10 +160,11 @@ with tab3:
             else:
                 st.error("No data available to generate report!", icon="❌")
 
+    # Form to generate train vs test SweetViz report
     with st.form(key="train-test-report"):
         st.subheader("Train vs Test Report")
 
-        # Expander for theory
+        # Expander for additional information about the train vs test report
         with st.expander("Learn more about comparing training and testing datasets", expanded=False):
             st.write("Lorem ipsum dolor sit amet")
         
@@ -147,33 +178,32 @@ with tab3:
                 st.success("Train vs Test report generated successfully!", icon="✅")
             else:
                 st.error("No data available to generate report!", icon="❌")
-'''
-    with st.form(key="comparison-report"):
+
+    # Container to generate comparison by feature report
+    with st.container(key="comparison-report", border=True):
         st.subheader("Comparison by Feature Report")
 
-        # Expander for theory
+        # Expander for additional information about the comparison by feature report
         with st.expander("Learn more about comparing intra-set characteristics", expanded=False):
             st.write("Lorem ipsum dolor sit amet")
 
-        # The user will now have the chance to pick the feature to compare using the dropdown menu. In the backend, this
-        # will be passed to the generate_comparison_by_feature function. There should be a warning if the selected feature has more than two categories,
-        # as the function is designed to compare features with exactly two categories.
-        if st.session_state.data is not None:
-            feature = st.selectbox("Select the feature to compare",
-                                    st.session_state.data.columns,
-                                    help="The selected feature must have only two unique values.")
-            st.write(f"Selected feature: {feature}")
-            # The app will show how many unique values the feature has. If the feature has more than two unique values, a warning will be displayed and the button will be disabled.
-            # However, if the feature has only two unique values, the function generate_comparison_by_feature will be called and the button will be enabled.
-            st.write(f"Number of unique values of {feature}: {st.session_state.data[feature].nunique()}")
-            if st.session_state.data[feature].nunique() == 2:
-                generate_report = st.form_submit_button("Generate Comparison by Feature Report", use_container_width=True)
-                if generate_report:
-                    generate_comparison_by_feature(st.session_state.data, feature)
-                    st.success("Comparison report generated successfully!", icon="✅")
-            else:
-                st.warning("Feature must have only two unique values to generate comparison report!")
-        else:
-            st.error("No data available to generate report!", icon="❌")
-'''
+        # Dropdown to select the feature for comparison
+        feature = st.selectbox("Select the feature to compare",
+                                st.session_state.data.columns,
+                                help="The selected feature must have only two unique values.",
+                                disabled=st.session_state.data is None)
         
+        # Display the number of unique values of the selected feature
+        st.write(f"Number of unique values of {feature}: {st.session_state.data[feature].nunique()}")
+
+        # Check if the selected feature has exactly two unique values
+        if st.session_state.data[feature].nunique() != 2:
+            st.warning("Feature must have only two unique values to generate comparison report!")
+            disabled = True
+        else:
+            disabled = False
+        
+        # Button to generate comparison by feature report
+        if st.button("Generate Comparison by Feature Report", use_container_width=True, disabled=disabled):
+            generate_comparison_by_feature(st.session_state.data, feature)
+            st.success("Comparison report generated successfully!", icon="✅")

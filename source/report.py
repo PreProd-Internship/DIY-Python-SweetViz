@@ -1,12 +1,29 @@
-# This code script will contain three functions:
-# 1. generate a full report using sweetviz
-# 2. generate a train vs test report using sweetviz
-# 3. generate a 'comparison by feature' report for features that only have two categories using sweetviz
-# These reports will be returned as HTML files.
+# METADATA [report.py] - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+    # Description: This code script contains the functions to generate SweetViz reports.
+
+    # Developed By: 
+        # Name: Mohini T
+        # Role: Intern, PreProd Corp
+        # Code ownership rights: Mohini T, PreProd Corp
+    
+    # Version:
+        # v1.0 Initial version. [Date: 09-12-2024]
+        # v1.1 Updated all report generation functions. [Date: 10-12-2024]
+        # v1.2 Removed redundant return values. [Date: 11-12-2024]
+
+# CODE - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+    # Dependencies:
+        # Python 3.10.15
+        # Libraries:     
+            # Python 3.10.15
+            # SweetViz 2.3.1
+            # Pandas 2.2.3
 
 # Importing required libraries
-import sweetviz as sv
-import pandas as pd
+import sweetviz as sv # For generating reports
+import pandas as pd # For data manipulation
 
 def generate_full_report(data):
     """
@@ -19,8 +36,7 @@ def generate_full_report(data):
     str: The path to the HTML file containing the report.
     """
     report = sv.analyze(data)
-    report.show_html()
-    return 'SWEETVIZ_REPORT.html'
+    report.show_html('SWEETVIZ_REPORT.html')
 
 def generate_train_test_report(X_train, X_test):
     """
@@ -34,11 +50,8 @@ def generate_train_test_report(X_train, X_test):
     str: The path to the HTML file containing the report.
     """
     report = sv.compare([X_train, 'Train'], [X_test, 'Test'])
-    report.show_html()
-    return 'SWEETVIZ_TRAIN_TEST_REPORT.html'
+    report.show_html('SWEETVIZ_TRAIN_TEST_REPORT.html')
 
-# This function will generate comparison report on intra-set characteristics of the chosen feature
-# following this format: my_report = sv.compare_intra(my_dataframe, my_dataframe["Sex"] == "male", ["Male", "Female"])
 def generate_comparison_by_feature(data, feature):
     """
     This function generates a 'comparison by feature' report for features that only have two categories using sweetviz.
@@ -51,5 +64,4 @@ def generate_comparison_by_feature(data, feature):
     str: The path to the HTML file containing the report.
     """
     report = sv.compare_intra(data, data[feature] == data[feature].unique()[0], [data[feature].unique()[0], data[feature].unique()[1]])
-    report.show_html()
-    return 'SWEETVIZ_COMPARISON.html'
+    report.show_html('SWEETVIZ_COMPARISON.html')
