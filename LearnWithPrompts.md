@@ -1,5 +1,7 @@
 # 🎯 Learn SweetViz with Prompts
 
+Use your favourite LLM to learn more about SweetViz!
+
 ## 📚 Project Summary
 This project focuses on using SweetViz for exploratory data analysis (EDA) in Python. The system:
 - Generates visualized reports with key insights

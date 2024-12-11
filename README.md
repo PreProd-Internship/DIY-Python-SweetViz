@@ -90,4 +90,4 @@ A mock dataset generated using [Mockaroo](https://mockaroo.com/) for learning pu
 
 For detailed information about the project, please refer to:
 - [SweetViz](https://pypi.org/project/sweetviz/) - SweetViz library's documentation
-- [LearnWithPrompts.md](LearnWithPrompts.md) - Interactive learning guide with examples
+- [LearnWithPrompts.md](LearnWithPrompts.md) - Use your favourite LLM to learn more about SweetViz
